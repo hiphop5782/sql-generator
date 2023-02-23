@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dummy Data Generator</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.2.3/superhero/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="offset-md-2 col-md-8">
+                    <div class="mt-4 p-4 text-light bg-dark rounded">
+                        <h1 class="text-center">Dummy Data Generator</h1>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <h2>Database</h2>
+                            <select class="form-select form-select-lg" disabled>
+                                <option>Oracle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <h2>Table</h2>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="table-name" placeholder="dummy" v-model="table.name">
+                                <label for="table-name">테이블명</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col">
+                            <h2>
+                                Column List
+                                <button class="btn btn-primary" @click="addColumn">
+                                    <i class="fas fa-plus"></i>
+                                    ADD
+                                </button>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="row mb-3" v-for="(column, index) in table.columnList" :key="index">
+                        <div class="col-12 mb-2">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" :id="'column-name-'+index" placeholder="dummy" v-model="table.columnList[index].name">
+                                <label :for="'column-name-'+index">컬럼명</label>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" :id="'column-type-'+index" placeholder="dummy" v-model="table.columnList[index].type">
+                                <label :for="'column-type-'+index">컬럼 자료형</label>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <select class="form-select form-select-lg" v-model="table.columnList.dataType">
+                                <option v-for="(dataType, index2) in dataTypes">{{dataType}}</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-2">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue@3.2.47"></script>
+    <script>
+        Vue.createApp({
+            data(){
+                return {
+                    dataTypes:["시퀀스", "랜덤"],
+                    table : {
+                        name:"",
+                        columnList:[],
+                    }
+                };
+            },
+            methods:{
+                addColumn() {
+                    this.table.columnList.push({
+                        name:"", type:"", dataType:"시퀀스",
+                    })
+                }
+            },
+        }).mount("#app");        
+    </script>
+</body>
+</html>
